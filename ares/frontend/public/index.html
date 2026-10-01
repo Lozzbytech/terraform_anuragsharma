@@ -27,7 +27,7 @@
     </main>
 
     <script>
-      const backendUrl = "http://127.0.0.1:5000/api/message";
+      const backendUrl = `${window.location.protocol}//${window.location.hostname}:5000/api/message`;
       const statusText = document.getElementById("statusText");
       const responseBox = document.getElementById("responseBox");
       const reloadButton = document.getElementById("reloadButton");
