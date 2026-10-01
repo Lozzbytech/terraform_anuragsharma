@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask + Express Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <p class="eyebrow">Frontend + Backend Demo</p>
+        <h1>Express talking to Flask</h1>
+        <p class="copy">
+          This page is served by Express and fetches JSON data from the Flask backend.
+        </p>
+
+        <button id="reloadButton" type="button">Fetch backend data</button>
+
+        <div class="status-row">
+          <span class="label">Status:</span>
+          <span id="statusText">Waiting to load...</span>
+        </div>
+
+        <pre id="responseBox">Loading...</pre>
+      </section>
+    </main>
+
+    <script>
+      const backendUrl = "http://127.0.0.1:5000/api/message";
+      const statusText = document.getElementById("statusText");
+      const responseBox = document.getElementById("responseBox");
+      const reloadButton = document.getElementById("reloadButton");
+
+      async function loadBackendData() {
+        statusText.textContent = "Fetching...";
+        responseBox.textContent = "Loading...";
+
+        try {
+          const response = await fetch(backendUrl);
+          const data = await response.json();
+
+          statusText.textContent = "Connected";
+          responseBox.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          statusText.textContent = "Connection failed";
+          responseBox.textContent = error.message;
+        }
+      }
+
+      reloadButton.addEventListener("click", loadBackendData);
+      loadBackendData();
+    </script>
+  </body>
+</html>
